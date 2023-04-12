@@ -6,23 +6,36 @@ using namespace std;
 class Solution {
   public:
     // Function to find the number of islands.
-    void dfs(vector<vector<char>>& grid, int r, int c){
-        if(r < 0 || c < 0 || r == grid.size() || c == grid[0].size() || grid[r][c] == ' ' || grid[r][c] == '0'){
-            return;
-        }
-        grid[r][c] = ' ';
-        for(int i=-1; i<=1; i++){
-            for(int j=-1; j<=1; j++){
-                dfs(grid, r+i, c+j);    
-            }    
+    void bfs(vector<vector<char>>& grid, vector<vector<int>>&vis, int r, int c){
+        queue<pair<int, int>> q;
+        int n = grid.size(), m = grid[0].size();
+        vis[r][c] = 1;
+        q.push({r,c});
+        while(q.size()){
+                int rowNum = q.front().first , colNum = q.front().second;
+                
+            q.pop();
+                for(int i=-1; i<=1; i++){
+                    for(int j=-1; j<=1; j++){
+                        int nbrRow = rowNum + i;
+                        int nbrCol = colNum + j;
+                        if(nbrRow >= 0 && nbrCol >= 0 &&
+                        nbrRow < n && nbrCol < m 
+                        && (grid[nbrRow][nbrCol] == '1' && !vis[nbrRow][nbrCol])){
+                            q.push({nbrRow, nbrCol});
+                            vis[nbrRow][nbrCol] = 1;
+                        }
+                    }    
+                }
         }
     }
     int numIslands(vector<vector<char>>& grid) {
         int n = grid.size(), m = grid[0].size(), res = 0;
+        vector<vector<int>> vis(n, vector<int>(m, 0));
         for(int i=0; i<n; i++){
             for(int j=0; j<m; j++){
-                if(grid[i][j] == '1'){
-                    dfs(grid, i, j);
+                if(grid[i][j] == '1' && !vis[i][j]){
+                    bfs(grid, vis, i, j);
                     res++;
                 }
             }
