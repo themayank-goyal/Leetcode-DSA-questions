@@ -11,14 +11,11 @@ class Solution {
             return;
         }
         grid[r][c] = ' ';
-        dfs(grid, r+1, c+1);
-        dfs(grid, r+1, c-1);
-        dfs(grid, r, c-1);
-        dfs(grid, r, c+1);
-        dfs(grid, r-1, c);
-        dfs(grid, r+1, c);
-        dfs(grid, r-1, c-1);
-        dfs(grid, r-1, c+1);
+        for(int i=-1; i<=1; i++){
+            for(int j=-1; j<=1; j++){
+                dfs(grid, r+i, c+j);    
+            }    
+        }
     }
     int numIslands(vector<vector<char>>& grid) {
         int n = grid.size(), m = grid[0].size(), res = 0;
