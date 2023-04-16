@@ -10,10 +10,10 @@ class Solution {
         pathVis[i] = 1;
         
         for(auto it: adj[i]){
-            if(!vis[it]){
-                if(dfs(it, adj, vis, pathVis)) return true;            
+            if(pathVis[it] == 1) return true;
+            else if(!vis[it]){
+                if(dfs(it, adj, vis, pathVis)) return true;
             }
-            else if(pathVis[it] == 1) return true;
         }
         pathVis[i] = 0;
         return false;
