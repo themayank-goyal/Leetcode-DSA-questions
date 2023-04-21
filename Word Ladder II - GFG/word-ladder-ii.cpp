@@ -21,13 +21,21 @@ public:
         vector<string> usedSequence;
         vector<vector<string>> res;
         
+        int level = 0;
+        
         while(q.size()){
-            int n = q.size();
-            
-            for(int i=0; i<n; i++){
                 vector<string> v = q.front();
-                q.pop();
                 string word = v.back();
+                q.pop();
+
+                if(v.size() > level){
+                    level++;
+                    for(auto it: usedSequence){
+                        map[it] = 0;
+                    }
+                    usedSequence.clear();
+                }
+                
                 
                 if(word == targetWord) {
                     if(res.size() == 0){
@@ -39,9 +47,9 @@ public:
                 }
                 
                 for(int j=0; j<startWord.size(); j++){
-                    for(int k=0; k<26; k++){
+                    for(char k='a'; k<='z'; k++){
                         string s = word;
-                        s[j] = 'a'+k;
+                        s[j] = k;
                         if(map[s] == 1){
                             usedSequence.push_back(s);
                             v.push_back(s);
@@ -52,12 +60,8 @@ public:
                 }
             }
             
-            for(auto it: usedSequence){
-                map[it] = 0;
-                usedSequence.clear();
-            }
             
-        }
+        
         
         return res;
         
