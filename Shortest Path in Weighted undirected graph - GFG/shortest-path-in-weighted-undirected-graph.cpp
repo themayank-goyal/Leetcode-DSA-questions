@@ -34,10 +34,11 @@ class Solution {
             st.erase(it);
             
             if(node == n){
-                if(minPath > d){
-                    minPath = d;
-                    res = seq;
-                }
+                return seq;
+                // if(minPath > d){
+                //     minPath = d;
+                //     res = seq;
+                // }
             }
             
             for(auto it: adj[node]){
@@ -52,7 +53,7 @@ class Solution {
                 }
             }
         }
-        return res.size() ? res : vector<int>(1, -1);
+        return vector<int>(1, -1);
     }
 };
 
